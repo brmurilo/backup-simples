@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PASTA="/usr/src/meus_arquivos"
+# Este script deve ser utilizado apenas para tarefas simples e de temporárias.
+# NUNCA insira a SENHA DE ACESSO ao servidor dentro de um arquivo.
+
+USUARIO="backupuser"
+SENHA="1234"
+SERVIDOR="192.168.10.133"
+DATA=$(date '+%Y-%m-%d_%H-%M-%S')
+DESTINO="/home/$USUARIO/backups/$DATA/"
+
+/usr/bin/sshpass -p "$SENHA" ssh -o StrictHostKeyChecking=no -o ProxyCommand=none $USUARIO@$SERVIDOR "mkdir -p $DESTINO"
+
+/usr/bin/sshpass -p "$SENHA" scp -o StrictHostKeyChecking=no -o ProxyCommand=none -rv "$PASTA"/* "$USUARIO@$SERVIDOR:$DESTINO"
+
+echo "$(date '+%Y-%m-%d %H:%M:%S') - Backup concluído em $DESTINO" >> /var/log/backup_simples.log
