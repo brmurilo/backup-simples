@@ -14,6 +14,7 @@ rsync só copia o que mudou e ainda pode comprimir dados durante a transferênci
 
 ---
 
+
 **## Pré-requisitos**
 
 - Debian / Ubuntu ou similar
@@ -25,6 +26,7 @@ sudo apt install sshpass -y
 
 - SSH configurado no servidor remoto e usuário de destino criado.
 - Permissão para o usuário rodar ssh e scp.
+
 
 **Configuração do script**
 Edite o arquivo backup_simples.sh e configure:
@@ -38,6 +40,7 @@ O script cria automaticamente um diretório remoto com o timestamp da execução
 DESTINO="/home/$USUARIO/backups/$DATA/"
 
 
+
 **Como usar**
 Torne o script executável:
 
@@ -48,6 +51,7 @@ Execute manualmente:
 
 Verifique o log de execução:
 tail -f /var/log/backup_simples.log
+
 
 **Agendamento via Cron**
 Para rodar automaticamente a cada minuto, adicione no /etc/crontab:
@@ -61,12 +65,14 @@ Após cada execução, o backup será armazenado em:
 /home/backupuser/backups/YYYY-MM-DD_HH-MM-SS/
 Cada execução cria uma nova pasta com timestamp.
 
-Logs
+
+**Logs**
 Log principal do script: /var/log/backup_simples.log
 
 Log do cron: /var/log/backup_cron.log (se configurado no crontab)
 
-Observações
+
+**Observações**
 Recomenda-se usar um usuário dedicado para backup, não root.
 O script utiliza scp -rv para exibir cada arquivo sendo transferido.
 A senha é armazenada em texto no script. Para produção, considere chaves SSH sem senha.
